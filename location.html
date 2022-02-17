@@ -19,8 +19,8 @@
     <script src="https://js.arcgis.com/4.22/"></script>
 
     <script>
-      require(["esri/config","esri/Map", "esri/views/MapView", "esri/widgets/Locate"], 
-	  function (esriConfig,Map, MapView, Locate) {
+      require(["esri/config","esri/Map", "esri/views/MapView", "esri/widgets/Locate", "esri/widgets/Track", "esri/Graphic"], 
+	  function (esriConfig,Map, MapView, Locate, Track, Graphic) {
 
         esriConfig.apiKey ="AAPK4e2406b02ca544c3a0537a375e59450eBGCyAJxZdYFN69kqzxi7OFhJsmSEytuit2F8cUGiHd-XK-WdyTGqmWXzsvbqKBi3";
 
@@ -35,15 +35,22 @@
           zoom: 2, // Zoom level
         });
 
-		const locate = new Locate({
+		const track = new Track({
           view: view,
-          useHeadingEnabled: false,
-          goToOverride: function(view, options) {
-            options.target.scale = 1500;
-            return view.goTo(options.target);
-          }
+          graphic: new Graphic({
+            symbol: {
+              type: "simple-marker",
+              size: "12px",
+              color: "green",
+              outline: {
+                color: "#efefef",
+                width: "1.5px"
+              }
+            }
+          }),
+          useHeadingEnabled: false
         });
-        view.ui.add(locate, "top-left");
+        view.ui.add(track, "top-left");
 
       });
     </script>
